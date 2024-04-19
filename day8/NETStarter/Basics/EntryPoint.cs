@@ -50,3 +50,5 @@
 // Console.WriteLine("Triangle-Area:" + ta);
 // Console.WriteLine("Triangle-Perimeter:" +tp);
 
+int[] ages= [23,1,5,67,98,56,78];
+var squares=ages.Select(ages=> ages *ages)
