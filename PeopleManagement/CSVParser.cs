@@ -1,42 +1,39 @@
-public class CSVParser
+class CsvParser
 {
-    private List<Person> people;
-
-    public CSVParser()
+    List<Person> people = [];
+    public void Parse()
     {
-        people = new List<Person>();
-    }
+        // Read file
+        string filePath = @"D:\intern\NETSDKandsharplanguage\PeopleManagement\People.csv";
 
-    public void Parse(string filePath)
-    {
-        using (StreamReader reader = new StreamReader(filePath))
+        var lines = File.ReadAllLines(filePath);
+        
+        // Parsing
+        foreach(var line in lines.Skip(1))
         {
-            while (!reader.EndOfStream)
+            var parts = line.Split(",", StringSplitOptions.RemoveEmptyEntries);
+            var person = new Person
             {
-                string line = reader.ReadLine();
-                if (!string.IsNullOrEmpty(line))
-                {
-                    string[] parts = line.Split(',');
-                    if (parts.Length >= 3) 
-                    {
-                        Person person = new Person
-                        {
-                            Index = parts[0],
-                            FirstName = parts[2],
-                            LastName = parts[3]
-                        };
-                        people.Add(person);
-                    }
-                }
-            }
+                index = int.Parse(parts[0]),
+                userId = parts[1],
+                firstName = parts[2],
+                lastName = parts[3],
+                sex = Enum.Parse<Gender>(parts[4]),
+                email = parts[5],
+                phone = parts[6],
+                dob = DateTime.Parse(parts[7]),
+                jobTitle = parts[8]
+            };
+
+            people.Add(person);
         }
     }
 
     public void PrintNames()
     {
-        foreach (var person in people)
+        foreach(var person in people)
         {
-            Console.WriteLine($"{person.Index} {person.FirstName} {person.LastName}");
+            Console.WriteLine($"{person.firstName} {person.lastName}");
         }
     }
 }
